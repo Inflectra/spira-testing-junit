@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0D57450-B100-4D39-B872-197556F9AAB0}"
+	ProjectSection(SolutionItems) = preProject
+		com\inflectra\spiratest\addons\junitextension\package-info.java = com\inflectra\spiratest\addons\junitextension\package-info.java
+		com\inflectra\spiratest\addons\junitextension\samples\SimpleTest.java = com\inflectra\spiratest\addons\junitextension\samples\SimpleTest.java
+		com\inflectra\spiratest\addons\junitextension\SoapRequestBuilder.java = com\inflectra\spiratest\addons\junitextension\SoapRequestBuilder.java
+		com\inflectra\spiratest\addons\junitextension\SpiraTestCase.java = com\inflectra\spiratest\addons\junitextension\SpiraTestCase.java
+		com\inflectra\spiratest\addons\junitextension\SpiraTestConfiguration.java = com\inflectra\spiratest\addons\junitextension\SpiraTestConfiguration.java
+		com\inflectra\spiratest\addons\junitextension\SpiraTestExecute.java = com\inflectra\spiratest\addons\junitextension\SpiraTestExecute.java
+		com\inflectra\spiratest\addons\junitextension\SpiraTestListener.java = com\inflectra\spiratest\addons\junitextension\SpiraTestListener.java
+		com\inflectra\spiratest\addons\junitextension\TestRun.java = com\inflectra\spiratest\addons\junitextension\TestRun.java
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
