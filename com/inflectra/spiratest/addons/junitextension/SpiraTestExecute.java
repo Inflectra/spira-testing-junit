@@ -90,7 +90,8 @@ public class SpiraTestExecute
 		}
 		catch (NumberFormatException e)
 		{
-			//Ignore the error
+			//Display the error
+			System.out.print ("Error sending results to SpiraTest (" + response + ")\n\n");
 		}
 		return testRunId;
 	}

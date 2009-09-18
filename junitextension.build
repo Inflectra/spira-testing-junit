@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="JUnit Extension" default="full" basedir="C:\Subversion\Projects\Inflectra\Trunk\Products and Services\Add Ons\JUnit Extension">
+<project name="JUnit Extension" default="full">
 	<target name="compile" description="Compiles the Java class files">
 		<echo message="Compiling the Java files"/>
 		
