@@ -13,7 +13,7 @@ import java.lang.*;
  * project and release information for the test being executed
  * 
  * @author		Inflectra Corporation
- * @version		1.2.0
+ * @version		2.3.0
  *
  */
 public class SpiraTestListener extends RunListener
@@ -167,6 +167,7 @@ public class SpiraTestListener extends RunListener
 					-1,
 					testRun.testCaseId,
 					testRun.releaseId,
+					testRun.testSetId,
 					now,
 					now,
 					testRun.executionStatusId,

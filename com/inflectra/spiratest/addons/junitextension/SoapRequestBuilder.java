@@ -10,7 +10,7 @@ import java.io.*;
  * This forms the SOAP packet to communicate with the SpiraTest web service
  * 
  * @author		David S Hobbs (http://www.codeproject.com/soap/WSfromJava.asp)
- * @version		2.2.0
+ * @version		2.3.0
  * Modified by Inflectra Corporation to avoid need to hard-code content-length
  */
 class SoapRequestBuilder
@@ -88,9 +88,9 @@ class SoapRequestBuilder
 	{
       OutputStream os = socket.getOutputStream();
       boolean autoflush = true;
-	 //The following is for debugging only
-     //PrintWriter out = new PrintWriter(System.out, autoflush);	
-     PrintWriter out = new PrintWriter(socket.getOutputStream(), autoflush);
+	  //The following is for debugging only
+      //PrintWriter out = new PrintWriter(System.out, autoflush);	
+      PrintWriter out = new PrintWriter(socket.getOutputStream(), autoflush);
       	
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));   
 
@@ -106,7 +106,14 @@ class SoapRequestBuilder
 	  {
         String name = (String) ParamNames.elementAt(t);
         String data = (String) ParamData.elementAt(t);
-        body.append("<" + name + ">" + data + "</" + name + ">\n");
+        if (data.equals(""))
+        {
+			body.append("<" + name + "/>\n");
+        }
+        else
+        {
+			body.append("<" + name + ">" + data + "</" + name + ">\n");
+		}
       }
       body.append("</" + MethodName + ">\n");
       body.append("</soap:Body>\n");

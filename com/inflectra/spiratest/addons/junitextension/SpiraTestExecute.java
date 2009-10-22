@@ -10,13 +10,13 @@ import java.text.*;
  * (Current implementation doesn't support SSL)
  * 
  * @author		Inflectra Corporation
- * @version		1.2.0
+ * @version		2.3.0
  *
  */
 public class SpiraTestExecute
 {
-	static final String WEB_SERVICE_NAMESPACE = "http://www.inflectra.com/SpiraTest/Services/v1.2.0/";
-	static final String WEB_SERVICE_URL_SUFFIX = "/Services/TestExecute.asmx";
+	static final String WEB_SERVICE_NAMESPACE = "http://www.inflectra.com/SpiraTest/Services/v2.2/";
+	static final String WEB_SERVICE_URL_SUFFIX = "/Services/v2_2/ImportExport.asmx";
 	
 	public String url;
 	public String userName;
@@ -28,7 +28,8 @@ public class SpiraTestExecute
 	 * 
 		@param testerUserId			The user id of the person who's running the test (-1 for logged in user)
 		@param testCaseId			The test case being executed
-		@param releaseId			The release being executed against
+		@param releaseId			The release being executed against (optional)
+		@param testSetId			The test set being executed against (optional)
 		@param executionStatusId	The status of the test run (pass/fail/not run)
 		@param runnerName			The name of the automated testing tool
 		@param runnerTestName		The name of the test as stored in JUnit
@@ -38,7 +39,7 @@ public class SpiraTestExecute
 		@param endDate				When the test run ended
 		@param startDate			When the test run started
 	 */
-	public int recordTestRun(int testerUserId, int testCaseId, int releaseId, Date startDate, Date endDate, int executionStatusId, String runnerName, String runnerTestName, int runnerAssertCount, String runnerMessage, String runnerStackTrace) 
+	public int recordTestRun(int testerUserId, int testCaseId, int releaseId, int testSetId, Date startDate, Date endDate, int executionStatusId, String runnerName, String runnerTestName, int runnerAssertCount, String runnerMessage, String runnerStackTrace) 
 	{
 		String response = "";
 		
@@ -61,7 +62,7 @@ public class SpiraTestExecute
 		//Instantiate the new SoapRequester class and populate
 		SoapRequestBuilder soapRequest = new SoapRequestBuilder();
 		soapRequest.Server = serverName;
-		soapRequest.MethodName = "RecordTestRun2";	//Sessionless version of API method
+		soapRequest.MethodName = "TestRun_RecordAutomated2";	//Sessionless version of API method
 		soapRequest.XmlNamespace = WEB_SERVICE_NAMESPACE;
 		soapRequest.WebServicePath = "/" + webServicePath;
 		soapRequest.SoapAction = soapRequest.XmlNamespace + soapRequest.MethodName;
@@ -70,7 +71,14 @@ public class SpiraTestExecute
 		soapRequest.AddParameter("projectId", Integer.toString(projectId));
 		soapRequest.AddParameter("testerUserId", Integer.toString(testerUserId));
 		soapRequest.AddParameter("testCaseId", Integer.toString(testCaseId));
-		soapRequest.AddParameter("releaseId", Integer.toString(releaseId));
+		if (releaseId != 0)
+		{
+			soapRequest.AddParameter("releaseId", Integer.toString(releaseId));
+		}
+		if (testSetId != 0)
+		{
+			soapRequest.AddParameter("testSetId", Integer.toString(testSetId));
+		}
 		soapRequest.AddParameter("startDate", startDateSerialized);
 		soapRequest.AddParameter("endDate", endDateSerialized);
 		soapRequest.AddParameter("executionStatusId", Integer.toString(executionStatusId));

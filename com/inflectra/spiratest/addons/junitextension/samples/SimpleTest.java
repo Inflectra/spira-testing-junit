@@ -15,7 +15,7 @@ import java.util.*;
  * Some simple tests using the ability to return results back to SpiraTest
  * 
  * @author		Inflectra Corporation
- * @version		1.2.0
+ * @version		2.2.0
  *
  */
 @SpiraTestConfiguration(
