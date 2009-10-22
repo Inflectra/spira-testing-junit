@@ -10,14 +10,8 @@ import java.io.*;
  * This forms the SOAP packet to communicate with the SpiraTest web service
  * 
  * @author		David S Hobbs (http://www.codeproject.com/soap/WSfromJava.asp)
- * @version		1.2.0
- *   MODIFIED by Kevin Miller kmiller@raf.com to work on both Windows and Linux.
- *   Original version used PrintWriter.println to write the soap message to the socket.
- *   This had the adverse affect of not working on both Windows and Linux because
- *   println adds a newline which is different in each O/S.  While it was possible to
- *   manually modify sendRequest int length this would mean having two different versions
- *   of code: one which runs on linux and one which runs on windows, which we found untenable.
- *   
+ * @version		2.2.0
+ * Modified by Inflectra Corporation to avoid need to hard-code content-length
  */
 class SoapRequestBuilder
 {
@@ -98,26 +92,28 @@ class SoapRequestBuilder
      //PrintWriter out = new PrintWriter(System.out, autoflush);	
      PrintWriter out = new PrintWriter(socket.getOutputStream(), autoflush);
       	
-      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      
-      // Next section rewritten to use PrintWriter.print instead of PrintWriter.println by KM
-      //  Note, when attempting to debug for purposes of determining the packet length expected with a new
-      // deployment of spiratest: if you get an error instantly, it means your packet length is too small,
-      // whereas if you get one after a long wait, it means your packet size is too big (it is waiting to 
-      // receive more bytes before it times out...)
-      
-      // the length value may need to be modified if you find it isn't working on your system
-      int length = 275;
-      length = length + (MethodName.length() * 2) + XmlNamespace.length() + Server.length();  
-          
+      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));   
+
+	  //Create the SOAP message payload
+	  StringBuffer body = new StringBuffer();
+      body.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+      body.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n");
+      body.append("<soap:Body>\n");
+      body.append("<" + MethodName + " xmlns=\"" + XmlNamespace + "\">\n");
+	  
+      //Parameters passed to the method are added here
       for (int t = 0; t < ParamNames.size(); t++)
 	  {
         String name = (String) ParamNames.elementAt(t);
         String data = (String) ParamData.elementAt(t);
-        length += name.length() + 2;	//Name plus open tags <>
-		length += name.length() + 3;	//Name plus close tags </>
-		length += data.length();
+        body.append("<" + name + ">" + data + "</" + name + ">\n");
       }
+      body.append("</" + MethodName + ">\n");
+      body.append("</soap:Body>\n");
+      body.append("</soap:Envelope>\n");
+      body.append("\n");
+      
+      int length = body.length();
 
       // send an HTTP request to the web service
       out.print("POST " + WebServicePath + " HTTP/1.1 \n");
@@ -125,24 +121,9 @@ class SoapRequestBuilder
       out.print("Content-Type: text/xml; charset=utf-8 \n");
       out.print("Content-Length: " + String.valueOf(length)+ " \n");
       out.print("SOAPAction: \"" + SoapAction + "\"\n");
-	  out.print("Connection: Close \n");  
+	  out.print("Connection: Close \n");
 	  out.print("\n");
-      out.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-      out.print("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n");
-      out.print("<soap:Body>\n");
-      out.print("<" + MethodName + " xmlns=\"" + XmlNamespace + "\">\n");
-      
-      //Parameters passed to the method are added here
-      for (int t = 0; t < ParamNames.size(); t++)
-	  {
-        String name = (String) ParamNames.elementAt(t);
-        String data = (String) ParamData.elementAt(t);
-        out.print("<" + name + ">" + data + "</" + name + ">\n");
-      }
-      out.print("</" + MethodName + ">\n");
-      out.print("</soap:Body>\n");
-      out.print("</soap:Envelope>\n");
-      out.print("\n");
+	  out.print(body.toString());
       out.flush();
       
       // Read the response from the server ... times out if the response takes
