@@ -18,6 +18,6 @@ public @interface SpiraTestConfiguration
 	String login ();
 	String password ();
 	int projectId ();
-	int releaseId () default 0;
-	int testSetId () default 0;
+	int releaseId () default -1;
+	int testSetId () default -1;
 }

@@ -23,7 +23,8 @@ import java.util.*;
 	login="fredbloggs",
 	password="fredbloggs",
 	projectId=1,
-	releaseId=1
+	releaseId=1,
+	testSetId=1
 )
 public class SimpleTest
 {

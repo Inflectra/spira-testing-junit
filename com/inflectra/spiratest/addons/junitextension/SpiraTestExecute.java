@@ -71,11 +71,11 @@ public class SpiraTestExecute
 		soapRequest.AddParameter("projectId", Integer.toString(projectId));
 		soapRequest.AddParameter("testerUserId", Integer.toString(testerUserId));
 		soapRequest.AddParameter("testCaseId", Integer.toString(testCaseId));
-		if (releaseId != 0)
+		if (releaseId != -1)
 		{
 			soapRequest.AddParameter("releaseId", Integer.toString(releaseId));
 		}
-		if (testSetId != 0)
+		if (testSetId != -1)
 		{
 			soapRequest.AddParameter("testSetId", Integer.toString(testSetId));
 		}

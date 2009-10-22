@@ -241,6 +241,7 @@ public class SpiraTestListener extends RunListener
 				testRun.password = classAnnotation.password();
 				testRun.projectId = classAnnotation.projectId();
 				testRun.releaseId = classAnnotation.releaseId();
+				testRun.testSetId = classAnnotation.testSetId();
 			}
 			else
 			{
