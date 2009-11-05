@@ -39,17 +39,38 @@ class SoapRequestBuilder
 		{
 			char c = content.charAt(i);
 			if(c == '<')
+			{
 				buffer.append(";&lt;");
+			}
 			else if(c == '>')
+			{
 				buffer.append(";&gt;");
+			}
 			else if(c == '&')
+			{
 				buffer.append(";&amp;");
+			}
 			else if(c == '"')
+			{
 				buffer.append(";&quot;");
+			}
 			else if(c == '\'')
+			{
 				buffer.append(";&apos;");
+			}
+			else if (c == 0x00 || c == 0x01 || c == 0x02 || c == 0x03 || c == 0x04
+				 || c == 0x05 || c == 0x06 || c == 0x07 || c == 0x08 || c == 0x0B
+				 || c == 0x0C || c == 0x0E || c == 0x0F || c == 0x10 || c == 0x11
+				 || c == 0x12 || c == 0x13 || c == 0x14 || c == 0x15 || c == 0x16
+				 || c == 0x17 || c == 0x18 || c == 0x19 || c == 0x1A || c == 0x1B
+				 || c == 0x1C || c == 0x1D || c == 0x1E || c == 0x1F)
+			{
+				//ignore such control characters
+			}
 			else
+			{
 				buffer.append(c);
+			}
 		}
 		return buffer.toString();
 	}
