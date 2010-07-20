@@ -19,7 +19,7 @@ import java.util.*;
  *
  */
 @SpiraTestConfiguration(
-	url="http://sandman/SpiraTest",
+	url="http://localhost/Spira",
 	login="fredbloggs",
 	password="fredbloggs",
 	projectId=1,
