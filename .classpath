@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/inflectra/spiratest/addons/junitextension/samples/_svn/|com/inflectra/spiratest/addons/junitextension/_svn/|com/inflectra/spiratest/addons/_svn/|com/inflectra/spiratest/_svn/|com/_svn/|com/inflectra/_svn/|_svn/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/junit-4.8.2.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
