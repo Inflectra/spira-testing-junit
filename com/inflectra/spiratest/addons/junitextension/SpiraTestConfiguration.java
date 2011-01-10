@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * project and release information for the test being executed
  * 
  * @author		Inflectra Corporation
- * @version		2.3.0
+ * @version		3.0.0
  *
  */
 @Retention(value=java.lang.annotation.RetentionPolicy.RUNTIME)

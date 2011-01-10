@@ -5,17 +5,13 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.*;
-import org.junit.runner.notification.*;
-
 import com.inflectra.spiratest.addons.junitextension.*;
-
-import java.util.*;
 
 /**
  * Some simple tests using the ability to return results back to SpiraTest
  * 
  * @author		Inflectra Corporation
- * @version		2.2.0
+ * @version		3.0.0
  *
  */
 @SpiraTestConfiguration(
@@ -106,7 +102,7 @@ public class SimpleTest
 		core.addListener(new SpiraTestListener());
 
 		//Finally run the test fixture
-		core.run (SimpleTest.class);
+		core.run(SimpleTest.class);
 	}
 
 	/**

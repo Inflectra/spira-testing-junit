@@ -3,17 +3,15 @@ package com.inflectra.spiratest.addons.junitextension;
 import org.junit.runner.notification.*;
 import org.junit.runner.*;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;   
-import java.util.*;                           
-import java.lang.*;
+import java.util.*;
 
 /**
  * This defines the 'SpiraTestConfiguration' annotation used to specify the authentication,
  * project and release information for the test being executed
  * 
  * @author		Inflectra Corporation
- * @version		2.3.0
+ * @version		3.0.0
  *
  */
 public class SpiraTestListener extends RunListener
@@ -164,10 +162,10 @@ public class SpiraTestListener extends RunListener
 				spiraTestExecute.password = testRun.password;
 				spiraTestExecute.projectId = testRun.projectId;
 				int testRunId = spiraTestExecute.recordTestRun (
-					-1,
+					null,
 					testRun.testCaseId,
-					testRun.releaseId,
-					testRun.testSetId,
+					(testRun.releaseId == -1) ? null : testRun.releaseId,
+					(testRun.testSetId == -1) ? null : testRun.testSetId,
 					now,
 					now,
 					testRun.executionStatusId,
