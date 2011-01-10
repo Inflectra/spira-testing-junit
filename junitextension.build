@@ -6,6 +6,7 @@
 			<arg value="cfv" />
 			<arg value="JUnitExtension.jar" />
 			<arg value="com\inflectra\spiratest\addons\junitextension\*.class" />
+			<arg value="com\inflectra\spiratest\addons\junitextension\soap\*.class" />
 			<arg value="com\inflectra\spiratest\addons\junitextension\samples\*.class" />
 		</exec>
 		
