@@ -20,7 +20,6 @@ import com.inflectra.spiratest.addons.junitextension.soap.RemoteAutomatedTestRun
 /**
  * This defines the 'SpiraTestExecute' class that provides the Java facade
  * for calling the SOAP web service exposed by SpiraTest
- * (Current implementation doesn't support SSL)
  * 
  * @author		Inflectra Corporation
  * @version		3.0.0
