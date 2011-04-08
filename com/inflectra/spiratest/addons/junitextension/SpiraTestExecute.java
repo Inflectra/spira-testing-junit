@@ -92,11 +92,11 @@ public class SpiraTestExecute
 			//Now record the test result
 			RemoteAutomatedTestRun remoteTestRun = new RemoteAutomatedTestRun();
 			remoteTestRun.setTestCaseId(testCaseId);
-			if (releaseId.equals(null))
+			if (!releaseId.equals(null))
 			{
 				remoteTestRun.setReleaseId(CreateJAXBInteger("ReleaseId", releaseId));
 			}
-			if (testSetId.equals(null))
+			if (!testSetId.equals(null))
 			{
 				remoteTestRun.setTestSetId(CreateJAXBInteger("TestSetId", testSetId));
 			}
