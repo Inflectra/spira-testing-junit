@@ -61,6 +61,9 @@ public class SpiraTestExecute
 		//Instantiate the soap proxy
 		try
 		{
+			//Trust all SSL certificates
+			SSLUtilities.trustAllHttpsCertificates();
+			
 			//Break up the URL into server name and the service path
 			URL serviceUrl = new URL(this.url + WEB_SERVICE_SUFFIX);
 
