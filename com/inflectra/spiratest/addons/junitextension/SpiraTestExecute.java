@@ -16,6 +16,8 @@ import com.inflectra.spiratest.addons.junitextension.soap.IImportExportConnectio
 import com.inflectra.spiratest.addons.junitextension.soap.IImportExportTestRunRecordAutomated1ServiceFaultMessageFaultFaultMessage;
 import com.inflectra.spiratest.addons.junitextension.soap.ImportExport;
 import com.inflectra.spiratest.addons.junitextension.soap.RemoteAutomatedTestRun;
+import com.sun.xml.internal.ws.client.ClientTransportException;
+import com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException;
 
 /**
  * This defines the 'SpiraTestExecute' class that provides the Java facade
@@ -27,7 +29,7 @@ import com.inflectra.spiratest.addons.junitextension.soap.RemoteAutomatedTestRun
  */
 public class SpiraTestExecute
 {
-	private static final String WEB_SERVICE_SUFFIX = "/Services/v3_0/ImportExport.svc";
+	private static final String WEB_SERVICE_SUFFIX = "/Services/v3_0/ImportExport.svc?WSDL";
 	private static final String WEB_SERVICE_NAMESPACE = "{http://www.inflectra.com/SpiraTest/Services/v3.0/}ImportExport";
 	private static final String WEB_SERVICE_NAMESPACE_DATA_OBJECTS = "http://schemas.datacontract.org/2004/07/Inflectra.SpiraTest.Web.Services.v3_0.DataObjects";
 
@@ -69,14 +71,32 @@ public class SpiraTestExecute
 
 			ImportExport service = new ImportExport(serviceUrl, QName.valueOf(WEB_SERVICE_NAMESPACE));
 			IImportExport soap = service.getBasicHttpBindingIImportExport();
+			IImportExport soap1 = service.getBasicHttpBindingIImportExport1();
 			
 			//Make sure that session is maintained
 			Map<String, Object> requestContext = ((BindingProvider)soap).getRequestContext();
 			requestContext.put(BindingProvider.SESSION_MAINTAIN_PROPERTY,true);
+			Map<String, Object> requestContext1 = ((BindingProvider)soap1).getRequestContext();
+			requestContext1.put(BindingProvider.SESSION_MAINTAIN_PROPERTY,true);
 						
 			//Authenticate
 			boolean success = false;
-	        success = soap.connectionAuthenticate2(this.userName, this.password, SPIRA_PLUG_IN_NAME);
+			try
+			{
+				success = soap.connectionAuthenticate2(this.userName, this.password, SPIRA_PLUG_IN_NAME);
+			}
+			catch (InaccessibleWSDLException ex)
+			{
+				//Try using the second binding
+				soap = soap1;
+				success = soap.connectionAuthenticate2(this.userName, this.password, SPIRA_PLUG_IN_NAME);
+			}
+			catch (ClientTransportException ex)
+			{
+				//Try using the second binding
+				soap = soap1;
+				success = soap.connectionAuthenticate2(this.userName, this.password, SPIRA_PLUG_IN_NAME);
+			}
 			if (!success)
 			{
 				//Display the error
