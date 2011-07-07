@@ -10,6 +10,7 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.*;
+
 import com.inflectra.spiratest.addons.junitextension.soap.IImportExport;
 import com.inflectra.spiratest.addons.junitextension.soap.IImportExportConnectionAuthenticate2ServiceFaultMessageFaultFaultMessage;
 import com.inflectra.spiratest.addons.junitextension.soap.IImportExportConnectionConnectToProjectServiceFaultMessageFaultFaultMessage;
@@ -24,7 +25,7 @@ import com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException;
  * for calling the SOAP web service exposed by SpiraTest
  * 
  * @author		Inflectra Corporation
- * @version		3.0.0
+ * @version		3.0.1
  *
  */
 public class SpiraTestExecute
@@ -70,8 +71,43 @@ public class SpiraTestExecute
 			URL serviceUrl = new URL(this.url + WEB_SERVICE_SUFFIX);
 
 			ImportExport service = new ImportExport(serviceUrl, QName.valueOf(WEB_SERVICE_NAMESPACE));
-			IImportExport soap = service.getBasicHttpBindingIImportExport();
-			IImportExport soap1 = service.getBasicHttpBindingIImportExport1();
+			//Try both the HTTP and HTTPS ports
+			IImportExport soap = null;
+			IImportExport soap1 = null;
+			try
+			{
+				soap = service.getBasicHttpBindingIImportExport();
+			}
+			catch (WebServiceException ex)
+			{
+				//Ignore as the port will be left as null
+			}
+			try
+			{
+				soap1 = service.getBasicHttpBindingIImportExport1();
+			}
+			catch (WebServiceException ex)
+			{
+				//Ignore as the port will be left as null
+			}
+			
+			//If both are NULL, throw exception
+			if (soap == null && soap1 == null)
+			{
+				//Display the error
+				System.out.print ("Unable to connect with either the SpiraTest HTTP or HTTPS APIs. Please check the URL and try again\n\n");
+				return -1;
+			}
+			
+			//If one is NULL, simply set to the same as the other to avoid having to add NULL checks in the subsequent code
+			if (soap == null)
+			{
+				soap = soap1;
+			}
+			else
+			{
+				soap1 = soap;
+			}
 			
 			//Make sure that session is maintained
 			Map<String, Object> requestContext = ((BindingProvider)soap).getRequestContext();
