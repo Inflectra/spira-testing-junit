@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * project and release information for the test being executed
  * 
  * @author		Inflectra Corporation
- * @version		3.0.0
+ * @version		3.0.1
  *
  */
 @Retention(value=java.lang.annotation.RetentionPolicy.RUNTIME)
@@ -15,9 +15,9 @@ import java.lang.annotation.*;
 public @interface SpiraTestConfiguration
 {
 	String url ();
-	String login ();
-	String password ();
-	int projectId ();
+	String login () default "";
+	String password () default "";
+	int projectId () default -1;
 	int releaseId () default -1;
 	int testSetId () default -1;
 }

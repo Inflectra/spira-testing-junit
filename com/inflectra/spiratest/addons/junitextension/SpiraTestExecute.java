@@ -25,7 +25,7 @@ import com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException;
  * for calling the SOAP web service exposed by SpiraTest
  * 
  * @author		Inflectra Corporation
- * @version		3.0.1
+ * @version		3.0.2
  *
  */
 public class SpiraTestExecute
@@ -151,11 +151,11 @@ public class SpiraTestExecute
 			//Now record the test result
 			RemoteAutomatedTestRun remoteTestRun = new RemoteAutomatedTestRun();
 			remoteTestRun.setTestCaseId(testCaseId);
-			if (!releaseId.equals(null))
+			if (releaseId != null)
 			{
 				remoteTestRun.setReleaseId(CreateJAXBInteger("ReleaseId", releaseId));
 			}
-			if (!testSetId.equals(null))
+			if (testSetId != null)
 			{
 				remoteTestRun.setTestSetId(CreateJAXBInteger("TestSetId", testSetId));
 			}

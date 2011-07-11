@@ -7,11 +7,13 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * This defines the 'SpiraTestConfiguration' annotation used to specify the authentication,
- * project and release information for the test being executed
+ * Implements a test listener for a JUnit test execution. The connection
+ * parameters for SpiraTeam as well as the test case, test set and release ids
+ * are samples from Java annotations and can be overruled by constructor
+ * arguments or properties.
  * 
  * @author		Inflectra Corporation
- * @version		3.0.0
+ * @version		3.0.1
  *
  */
 public class SpiraTestListener extends RunListener
@@ -19,7 +21,158 @@ public class SpiraTestListener extends RunListener
 	static final String TEST_RUNNER_NAME = "JUnit";
 
 	protected Vector<TestRun> testRunVector;
+	private String url;
+	private String userName;
+	private String password;
+	private Integer projectId;
+	private Integer releaseId;
+	private Integer testSetId;
 
+	/**
+	 * Name of URL property for SpiraTeam
+	 */
+	public static final String SPIRA_URL_PROPERTY = "spira.url";
+	/**
+	 * Name of user name property for SpiraTeam login
+	 */
+	public static final String SPIRA_USER_NAME_PROPERTY = "spira.login";
+	/**
+	 * Name of password property for SpiraTeam login
+	 */
+	public static final String SPIRA_PASSWORD_PROPERTY = "spira.password";
+	/**
+	 * Name of project id property for SpiraTeam login
+	 */
+	public static final String SPIRA_PROJECT_ID_PROPERTY = "spira.projectId";
+	/**
+	 * Name of release id property for SpiraTeam
+	 */
+	public static final String SPIRA_RELEASE_ID_PROPERTY = "spira.releaseId";
+	/**
+	 * Name of test set id property for SpiraTeam
+	 */
+	public static final String SPIRA_TEST_SET_ID_PROPERTY = "spira.testSetId";
+	private static final String UNKNOWN_INT_PROPERTY = "0";
+
+	
+	/**
+	 * Constructs a listener without properties
+	 */
+	public SpiraTestListener() {
+		this(null, null, null, null, null, null);
+	}
+
+	/**
+	 * Constructs a listener overriding the property release id only
+	 * 
+	 * @param releaseId
+	 *            release id to be used with SpiraTeam
+	 */
+	public SpiraTestListener(Integer releaseId)
+	{
+		this(null, null, null, null, releaseId, null);
+	}
+
+	/**
+	 * Constructs a listener overriding the properties.
+	 * 
+	 * @param props
+	 *            Properties to be overruled
+	 */
+	public SpiraTestListener(final Properties props)
+	{
+		setUrl(props.getProperty(SPIRA_URL_PROPERTY));
+		setUserName(props.getProperty(SPIRA_USER_NAME_PROPERTY));
+		setPassword(props.getProperty(SPIRA_PASSWORD_PROPERTY));
+		setProjectId(Integer.parseInt(props.getProperty(
+				SPIRA_PROJECT_ID_PROPERTY, UNKNOWN_INT_PROPERTY)));
+		setReleaseId(Integer.parseInt(props.getProperty(
+				SPIRA_RELEASE_ID_PROPERTY, UNKNOWN_INT_PROPERTY)));
+		setTestSetId(Integer.parseInt(props.getProperty(
+				SPIRA_TEST_SET_ID_PROPERTY, UNKNOWN_INT_PROPERTY)));
+	}
+
+	/**
+	 * Constructs a listener overriding all properties.
+	 * 
+	 * @param url URL to be used for SpiraTeam connection
+	 * @param userName user name to be used for SpiraTeam login
+	 * @param password password to be used for SpiraTeam login
+	 * @param projectId project id to be used for SpiraTeam login
+	 * @param releaseId release id to be used with SpiraTeam
+	 * @param testSetId test set id to be used with SpiraTeam
+	 */
+	public SpiraTestListener(final String url, final String userName,
+			final String password, Integer projectId, Integer releaseId, Integer testSetId)
+	{
+		setUrl(url);
+		setUserName(userName);
+		setPassword(password);
+		setProjectId(projectId);
+		setReleaseId(releaseId);
+		setTestSetId(testSetId);
+	}
+
+	/**
+	 * Sets URL for SpiraTeam connection
+	 * 
+	 * @param url URL to be used for SpiraTeam connection
+	 */
+	public void setUrl(String url)
+	{
+		this.url = url;
+	}
+
+	/**
+	 * Sets user name for SpiraTeam connection
+	 * 
+	 * @param userName user name to be used for SpiraTeam login
+	 */
+	public void setUserName(String userName)
+	{
+		this.userName = userName;
+	}
+
+	/**
+	 * Sets password for SpiraTeam connection
+	 * 
+	 * @param password password to be used for SpiraTeam login
+	 */
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	/**
+	 * Sets project id for SpiraTeam connection
+	 * 
+	 * @param projectId project id to be used for SpiraTeam login
+	 */
+	public void setProjectId(Integer projectId)
+	{
+		this.projectId = projectId;
+	}
+
+	/**
+	 * Sets release id for SpiraTeam connection
+	 * 
+	 * @param releaseId release id to be used with SpiraTeam
+	 */
+	public void setReleaseId(Integer releaseId)
+	{
+		this.releaseId = releaseId;
+	}
+
+	/**
+	 * Sets test set id for SpiraTeam connection
+	 * 
+	 * @param testSetId test set id to be used with SpiraTeam
+	 */
+	public void setTestSetId(Integer testSetId)
+	{
+		this.testSetId = testSetId;
+	}
+	
 	/**
 	 * Logs a failure with SpiraTest whenever a unit test fails
 	 * 
@@ -241,9 +394,51 @@ public class SpiraTestListener extends RunListener
 				testRun.releaseId = classAnnotation.releaseId();
 				testRun.testSetId = classAnnotation.testSetId();
 			}
-			else
+			
+			// overwrite the test configuration with the constructor call
+			// parameters
+			if (url != null && !url.isEmpty())
 			{
-				System.out.print ("SpiraTest Annotation not Found on class '" + className + "'!\n\n");
+				testRun.url = url;
+			}
+			if (userName != null && !userName.isEmpty())
+			{
+				testRun.userName = userName;
+			}
+			if (password != null && !password.isEmpty())
+			{
+				testRun.password = password;
+			}
+			if (projectId != null && projectId != 0)
+			{
+				testRun.projectId = projectId;
+			}
+			if (releaseId != null && releaseId != 0)
+			{
+				testRun.releaseId = releaseId;
+			}
+			if (testSetId != null && testSetId != 0)
+			{
+				testRun.testSetId = testSetId;
+			}
+			
+			//Make sure we have a URL, login, password and project specified
+			//(the rest are optional)
+			if (testRun.url == null || testRun.url.isEmpty())
+			{
+				System.out.println("You need to specify a URL in either the class annotation or through the listener constructor");
+			}
+			if (testRun.userName == null || testRun.userName.isEmpty())
+			{
+				System.out.println("You need to specify a User Name in either the class annotation or through the listener constructor");
+			}
+			if (testRun.password == null || testRun.password.isEmpty())
+			{
+				System.out.println("You need to specify a Password in either the class annotation or through the listener constructor");
+			}
+			if (testRun.projectId < 1)
+			{
+				System.out.println("You need to specify a ProjectId in either the class annotation or through the listener constructor");
 			}
 		}
 		catch(NoSuchMethodException e)
