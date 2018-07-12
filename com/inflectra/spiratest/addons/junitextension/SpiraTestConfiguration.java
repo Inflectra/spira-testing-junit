@@ -1,5 +1,7 @@
 package com.inflectra.spiratest.addons.junitextension;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import java.lang.annotation.*;
 
 /**
@@ -12,6 +14,8 @@ import java.lang.annotation.*;
  */
 @Retention(value=java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target(value=java.lang.annotation.ElementType.TYPE)
+//stop user from needing to type this
+@ExtendWith( SpiraExtension.class )
 public @interface SpiraTestConfiguration
 {
 	String url ();
