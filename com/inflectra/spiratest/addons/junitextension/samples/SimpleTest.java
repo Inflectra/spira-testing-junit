@@ -20,14 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         url = "https://demo.spiraservice.net/peter-inflectra",
         login = "fredbloggs",
         password = "PleaseChange",
-        projectId = 1
-)
-/*
-,
+        projectId = 1,
         //following are OPTIONAL
-        releaseId = 1,
+        releaseId = 7,
         testSetId = 1
- */
+)
+
 public class SimpleTest {
     protected int fValue1;
     protected int fValue2;
