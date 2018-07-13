@@ -25,7 +25,7 @@ import com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException;
  * calling the SOAP web service exposed by SpiraTest
  *
  * @author Inflectra Corporation
- * @version 3.0.2
+ * @version 4.0.0
  */
 public class SpiraTestExecute {
     private static final String WEB_SERVICE_SUFFIX = "/Services/v3_0/ImportExport.svc?WSDL";

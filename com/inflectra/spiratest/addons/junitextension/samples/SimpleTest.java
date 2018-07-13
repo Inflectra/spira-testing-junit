@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Some simple tests using the ability to return results back to SpiraTest
  *
  * @author Inflectra Corporation
- * @version 3.0.0
+ * @version 4.0.0
  */
 @SpiraTestConfiguration(
         //following are REQUIRED

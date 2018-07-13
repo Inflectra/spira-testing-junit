@@ -5,7 +5,7 @@ package com.inflectra.spiratest.addons.junitextension;
  * the information relating to a single test run
  * 
  * @author		Inflectra Corporation
- * @version		3.0.0
+ * @version		4.0.0
  *
  */
 public class TestRun
