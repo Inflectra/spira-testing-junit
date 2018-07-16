@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project name="JUnit Extension" default="full">
+	<target name="makejar" description="Packages the binaries into a JAR archive">
+		<echo message="Making the JAR file"/>
+		<exec program="jar" verbose="true">
+			<arg value="cfv" />
+			<arg value="JUnitExtension.jar" />
+			<arg value="com\inflectra\spiratest\addons\junitextension\*.class" />
+			<arg value="com\inflectra\spiratest\addons\junitextension\soap\*.class" />
+			<arg value="com\inflectra\spiratest\addons\junitextension\samples\*.class" />
+		</exec>
+		
+		<echo message="Viewing the JAR file " />
+		<exec program="jar" verbose="true">
+			<arg value="tf" />
+			<arg value="JUnitExtension.jar" />
+		</exec>
+	</target>
+	
+	<target name="zipup" description="Zips up the whole application for deployment">
+		<echo message="Zipping up entire application" />
+		<zip zipfile="JUnitExtension.zip" verbose="true" comment="JUnit Extension for SpiraTest">
+			<fileset>
+				<include name="**/*.java" />
+				<include name="*.jar" />
+				<include name="*.txt" />
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="full" description="Builds the whole JUnit extension and zips it up" depends="makejar,zipup">
+	</target>
+	
+</project>
