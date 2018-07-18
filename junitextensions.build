@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="JUnit Extension" default="zipup">
+
+	<target name="zipup" description="Zips up the whole application for deployment">
+		<echo message="Zipping up entire application" />
+		<zip zipfile="JUnitExtension.zip" verbose="true" comment="JUnit Extension for SpiraTest">
+			<fileset>
+				<include name="Jars/**/*.jar" />
+				<include name="JUnit 4/src/**/*.java" />
+				<include name="JUnit 5/src/**/*.java" />
+				<include name="*.txt" />
+			</fileset>
+		</zip>
+	</target>
+	
+</project>
