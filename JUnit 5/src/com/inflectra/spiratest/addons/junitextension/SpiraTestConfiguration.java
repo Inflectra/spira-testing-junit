@@ -20,7 +20,11 @@ public @interface SpiraTestConfiguration
 {
 	String url ();
 	String login () default "";
-	String password () default "";
+
+	/**
+	 * The RSS Token in your user profile. RSS Feeds must be enabled for this to work
+	 */
+	String rssToken () default "";
 	int projectId () default -1;
 	int releaseId () default -1;
 	int testSetId () default -1;

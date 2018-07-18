@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: com.inflectra.spiratest.addons.junitextension
+Main-Class: com.inflectra.spiratest.addons.junitextension.samples.Simp
+ leTest
+
