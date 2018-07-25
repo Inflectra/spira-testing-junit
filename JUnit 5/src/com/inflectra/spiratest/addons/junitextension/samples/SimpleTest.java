@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @SpiraTestConfiguration(
         //following are REQUIRED
-        url = "https://demo.spiraservice.net/peter-inflectra",
-        login = "administrator",
-        rssToken = "{90250D72-4526-4889-B670-0290BF63BC24}",
+        url = "http://doctor/SpiraPlan",
+        login = "fredbloggs",
+        rssToken = "{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}",
         projectId = 1,
         //following are OPTIONAL
         releaseId = 7,
