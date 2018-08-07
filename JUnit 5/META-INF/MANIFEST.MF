@@ -1,4 +1,8 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Main-Class: com.inflectra.spiratest.addons.junitextension.samples.Simp
  leTest
 
+=======
+Class-Path: gson-2.8.5.jar com.google.gson
+>>>>>>> enhancement/github-integration

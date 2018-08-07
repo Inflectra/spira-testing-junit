@@ -1,4 +1,8 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
+=======
+Class-Path: com.inflectra.spiratest.addons.junitextension
+>>>>>>> enhancement/github-integration
 Main-Class: com.inflectra.spiratest.addons.junitextension.samples.Simp
  leTest
 

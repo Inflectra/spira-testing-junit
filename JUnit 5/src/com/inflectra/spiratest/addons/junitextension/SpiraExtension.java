@@ -81,7 +81,7 @@ public class SpiraExtension implements Extension, BeforeAllCallback, AfterEachCa
                 //now populate the credentials in testRun
                 testRun.url       = testConfiguration.url();
                 testRun.userName  = testConfiguration.login();
-                testRun.password  = testConfiguration.password();
+                testRun.password  = testConfiguration.rssToken();
                 testRun.projectId = testConfiguration.projectId();
                 testRun.releaseId = testConfiguration.releaseId();
                 testRun.testSetId = testConfiguration.testSetId();
@@ -110,11 +110,7 @@ public class SpiraExtension implements Extension, BeforeAllCallback, AfterEachCa
                 //only need to initialize once
                 if(spiraTestExecute == null) {
                     //initialize spiraTestExecute
-                    spiraTestExecute = new SpiraTestExecute();
-                    spiraTestExecute.password  = testRun.password;
-                    spiraTestExecute.userName  = testRun.userName;
-                    spiraTestExecute.url       = testRun.url;
-                    spiraTestExecute.projectId = testRun.projectId;
+                    spiraTestExecute = new SpiraTestExecute(testRun.url, testRun.userName, testRun.password, testRun.projectId);
                 }
                 testRuns.add(testRun);
 
