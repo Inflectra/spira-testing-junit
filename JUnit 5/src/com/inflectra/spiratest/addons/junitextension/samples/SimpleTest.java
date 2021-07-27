@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @SpiraTestConfiguration(
         //following are REQUIRED
-        url = "http://doctor/SpiraPlan",
+        url = "https://demo-us.spiraservice.net/mysite",
         login = "fredbloggs",
         rssToken = "{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}",
         projectId = 1,
@@ -43,7 +43,7 @@ public class SimpleTest {
      * Tests the addition of the two values
      */
     @Test
-    @SpiraTestCase(testCaseId = 12)
+    @SpiraTestCase(testCaseId = 2)
     public void testAdd() {
         double result = fValue1 + fValue2;
 
@@ -55,7 +55,7 @@ public class SimpleTest {
      * Tests division by zero
      */
     @Test
-    @SpiraTestCase(testCaseId = 12)
+    @SpiraTestCase(testCaseId = 3)
     public void testDivideByZero() {
         int zero = 0;
         int result = 8 / zero;
@@ -65,7 +65,7 @@ public class SimpleTest {
      * Tests two equal values
      */
     @Test
-    @SpiraTestCase(testCaseId = 12)
+    @SpiraTestCase(testCaseId = 4)
     public void testEquals() {
         assertEquals(12, 12);
         assertEquals(12L, 12L);
@@ -79,7 +79,7 @@ public class SimpleTest {
      * Tests success
      */
     @Test
-    @SpiraTestCase(testCaseId = 12)
+    @SpiraTestCase(testCaseId = 5)
     public void testSuccess() {
         //Successful test
         assertEquals(12, 12);
